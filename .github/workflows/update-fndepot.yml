@@ -53,6 +53,7 @@ jobs:
                   -e '/<summary>/d' \
                   -e '/<\/summary>/d' \
                   -e '/^\*\*Full Changelog\*\*/d' \
+                  -e "s/^## What's Changed/What's Changed/" \
                   -e 's|https://github.com/[^ ]*/pull/\([0-9]\+\)|#\1|g')
           
           # 4. 拼装官方下载直链
