@@ -43,8 +43,17 @@ jobs:
           
           echo "发现新版本，开始下载校验..."
           
-          # 3. 提取过滤 Release 更新日志
-          RELEASE_BODY=$(echo "$LATEST_RELEASE" | jq -r '.body // "暂无更新日志"' | sed -e '/^|/d' -e '/^##* *Download/Id' -e '/^##* *下载/d')
+          # 3. 提取过滤 Release 更新日志，并格式化 PR 链接
+          RELEASE_BODY=$(echo "$LATEST_RELEASE" | jq -r '.body // "暂无更新日志"' \
+            | sed -e '/^|/d' \
+                  -e '/^##* *Download/Id' \
+                  -e '/^##* *下载/d' \
+                  -e '/<details>/d' \
+                  -e '/<\/details>/d' \
+                  -e '/<summary>/d' \
+                  -e '/<\/summary>/d' \
+                  -e '/^\*\*Full Changelog\*\*/d' \
+                  -e 's|https://github.com/[^ ]*/pull/\([0-9]\+\)|#\1|g')
           
           # 4. 拼装官方下载直链
           BASE_NAME="banban-client-${VERSION}"
