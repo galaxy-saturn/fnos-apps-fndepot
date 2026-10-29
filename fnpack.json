@@ -1,0 +1,25 @@
+{
+  "schema_version": "2",
+  "source_info": {
+    "name": "BanbanAI 飞牛应用源",
+    "author": "galaxy-saturn"
+  },
+  "apps": {
+    "banban.ai": {
+      "display_name": "BanbanAI",
+      "desc": "BanbanAI 官方飞牛桌面及服务端应用。",
+      "platform": [
+        "x86",
+        "arm"
+      ],
+      "categories": [
+        "AI赋能"
+      ],
+      "icon_url": "icon.png",
+      "run_as": "package",
+      "install_type": "",
+      "is_docker": true,
+      "releases": {}
+    }
+  }
+}
