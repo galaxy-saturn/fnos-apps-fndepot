@@ -24,7 +24,10 @@
         "image/show4.png",
         "image/show5.png"
       ],
+      "author": "BanbanAI",
+      "author_url": "https://github.com/BanbanAI/BanbanAI",
       "maintainer": "BanbanAI",
+      "website": "https://github.com/BanbanAI/BanbanAI",
       "run_as": "package",
       "install_type": "",
       "is_docker": false,
