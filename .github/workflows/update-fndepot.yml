@@ -1,35 +1,55 @@
-name: Update FnDepot Source
+name: Sync BanbanAI Release
 
 on:
-  release:
-    types: [published]
+  # 允许在 GitHub 网页端 Actions 页面手动点击 "Run workflow" 一键触发
+  workflow_dispatch: 
+  # 每天北京时间 10:00 和 22:00 自动执行一次检查 (对应 UTC 2:00 和 14:00)
+  schedule:
+    - cron: '0 2,14 * * *'
 
 permissions:
   contents: write
 
 jobs:
-  update-fnpack:
+  sync-fnpack:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download Dual-Arch FPK and Append to JSON
-        env:
-          TAG_NAME: ${{ github.event.release.tag_name }}
-          REPO: ${{ github.repository }}
+      - name: Fetch Latest Release and Update JSON
         run: |
           set -euo pipefail
           
-          # 解析版本号并拼接 GitHub 专属直链
-          VERSION=${TAG_NAME#v}
-          BASE_NAME="banban-client-${VERSION}"
-          URL_X86="https://github.com/${REPO}/releases/download/${TAG_NAME}/${BASE_NAME}-fnos-x64.fpk"
-          URL_ARM="https://github.com/${REPO}/releases/download/${TAG_NAME}/${BASE_NAME}-fnos-arm64.fpk"
+          echo "正在获取 BanbanAI/BanbanAI 官方最新 Release..."
+          # 1. 调用 GitHub API 获取官方最新发布版信息
+          LATEST_RELEASE=$(curl -sL https://api.github.com/repos/BanbanAI/BanbanAI/releases/latest)
+          TAG_NAME=$(echo "$LATEST_RELEASE" | jq -r .tag_name)
           
-          # 从 GitHub Event 载荷中提取 Release 正文，并过滤掉 Downloads 表格及相关标题
-          RELEASE_BODY=$(jq -r '.release.body // "暂无更新日志"' "$GITHUB_EVENT_PATH" \
-            | sed -e '/^|/d' -e '/^##* *Download/Id' -e '/^##* *下载/d')
+          if [ "$TAG_NAME" == "null" ] || [ -z "$TAG_NAME" ]; then
+            echo "未找到有效的 Release，退出任务。"
+            exit 1
+          fi
+          
+          VERSION=${TAG_NAME#v}
+          echo "官方最新版本为: $VERSION"
+          
+          # 2. 检查本地 fnpack.json 是否已经收录了该版本
+          # 如果存在该版本键值，则直接成功退出，避免重复提交
+          if jq -e ".apps[\"banban.ai\"].releases[\"$VERSION\"]" fnpack.json > /dev/null; then
+            echo "✅ 版本 $VERSION 已存在于 fnpack.json 中，无需更新。"
+            exit 0
+          fi
+          
+          echo "发现新版本，开始下载校验..."
+          
+          # 3. 提取过滤 Release 更新日志
+          RELEASE_BODY=$(echo "$LATEST_RELEASE" | jq -r '.body // "暂无更新日志"' | sed -e '/^|/d' -e '/^##* *Download/Id' -e '/^##* *下载/d')
+          
+          # 4. 拼装官方下载直链
+          BASE_NAME="banban-client-${VERSION}"
+          URL_X86="https://github.com/BanbanAI/BanbanAI/releases/download/${TAG_NAME}/${BASE_NAME}-fnos-x64.fpk"
+          URL_ARM="https://github.com/BanbanAI/BanbanAI/releases/download/${TAG_NAME}/${BASE_NAME}-fnos-arm64.fpk"
           
           echo "下载并校验 x86 包: $URL_X86"
           wget -q -O temp_x86.fpk "$URL_X86"
@@ -43,7 +63,7 @@ jobs:
           
           CURRENT_TIME=$(date -Iseconds)
           
-          # 使用 jq 注入所有变量，追加新版本节点更新 fnpack.json
+          # 5. 更新本地 JSON
           jq --arg ver "$VERSION" \
              --arg time "$CURRENT_TIME" \
              --arg changelog "$RELEASE_BODY" \
@@ -62,8 +82,14 @@ jobs:
 
       - name: Commit and Push changes
         run: |
+          # 检查是否有文件变动（防止 jq 意外未修改文件时触发空提交报错）
+          if [[ -z $(git status -s) ]]; then
+            echo "没有文件发生变更。"
+            exit 0
+          fi
+          
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add fnpack.json
-          git commit -m "Auto-update fnpack.json for release ${{ github.event.release.tag_name }}"
+          git commit -m "Auto-sync BanbanAI official release"
           git push
