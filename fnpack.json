@@ -2,12 +2,14 @@
   "schema_version": "2",
   "source_info": {
     "name": "BanbanAI 飞牛应用源",
-    "author": "BanbanAI"
+    "description": "BanbanAI，自动跟踪上游 GitHub Release 更新",
+    "author": "galaxy-saturn",
+    "homepage": "https://github.com/galaxy-saturn/fnos-apps-fndepot"
   },
   "apps": {
     "banban.ai": {
       "display_name": "BanbanAI",
-      "desc": "BanbanAI 官方飞牛桌面及服务端应用。",
+      "desc": "斑斑低代码是一款面向中小企业的低代码数字化应用搭建平台，致力于提供“真免费、零门槛”的数字化转型解决方案，帮助企业零成本构建安全、高效、可拓展的业务系统，轻松开启数字化转型。",
       "platform": [
         "x86",
         "arm"
@@ -26,9 +28,10 @@
       ],
       "author": "BanbanAI",
       "maintainer": "BanbanAI",
-      "homepage": "https://github.com/BanbanAI/BanbanAI",
+      "maintainer_url": "https://github.com/BanbanAI/BanbanAI",
+      "bug_report_url": "https://github.com/BanbanAI/BanbanAI/issues",
       "run_as": "package",
-      "install_type": "",
+      "install_type": "存储空间",
       "is_docker": false,
       "service_port": "16666",
       "releases": {}
