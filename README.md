@@ -10,7 +10,7 @@
     <a href="https://github.com/galaxy-saturn/fnos-apps-fndepot/actions"><img src="https://github.com/galaxy-saturn/fnos-apps-fndepot/actions/workflows/update-fndepot.yml/badge.svg" alt="Sync Status"></a>
     <img src="https://img.shields.io/badge/FnOS-FnDepot%20V2-007ACC?logo=linux&logoColor=white" alt="FnOS Standard">
     <img src="https://img.shields.io/static/v1?label=Arch&message=x86_64%20%7C%20arm64&color=success" alt="Architecture">
-    <a href="https://github.com/BanbanAI/BanbanAI"><img src="https://img.shields.io/badge/Upstream-BanbanAI-0969da.svg?logo=github&logoColor=white" alt="Upstream"></a>
+    <a href="https://github.com/BanbanAI/BanbanAI" title="上游官方仓库: BanbanAI"><img src="image/icon.png" height="20" width="20" alt="Upstream" style="vertical-align: -4px; border-radius: 4px;"></a>
     <img src="https://img.shields.io/badge/License-MIT-orange" alt="License">
   </p>
 
@@ -25,4 +25,4 @@
 在飞牛系统「应用中心」中添加外部源时，直接复制下方链接：
 
 ```text
-https://github.com/galaxy-saturn/fnos-apps-fndepot
+[https://github.com/galaxy-saturn/fnos-apps-fndepot](https://github.com/galaxy-saturn/fnos-apps-fndepot)
