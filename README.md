@@ -25,4 +25,4 @@
 在飞牛系统「应用中心」中添加外部源时，直接复制下方链接：
 
 ```text
-[https://github.com/galaxy-saturn/fnos-apps-fndepot](https://github.com/galaxy-saturn/fnos-apps-fndepot)
+https://github.com/galaxy-saturn/fnos-apps-fndepot
