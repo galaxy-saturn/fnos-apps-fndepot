@@ -34,7 +34,24 @@
       "install_type": "存储空间",
       "is_docker": false,
       "service_port": "16666",
-      "releases": {}
+      "releases": {
+        "2.1.2": {
+          "updated_at": "2026-10-30T01:58:23+00:00",
+          "changelog": "\r\n\r\n\r\n斑斑AI低代码 2.1.2\r\n\r\n🐛 修复\r\n- 修复一些已知问题\r\n\r\n\r\nWhat's Changed\r\n* 修复导出系统迁移包问题 by @kaishui123 in #89\r\n* 修复打印子表单时已删除数据仍被打印的问题 by @kaishui123 in #90\r\n* 修复 TEXT 公式日期格式中 MM 月份不补零的问题 by @kaishui123 in #91\r\n* 修复按子表字段设置筛选条件时，取到的值不对的问题 by @kaishui123 in #92\r\n* 修复多行文本换行问题 by @kaishui123 in #93\r\n* 修复数据回收站恢复数据，子表内容丢失问题 by @kaishui123 in #94\r\n* 修复公式报错问题 by @kaishui123 in #95\r\n* 修复删除触发的流程里，修改数据时选不到子表字段问题 by @kaishui123 in #96\r\n* 修复再次发起流程 by @kaishui123 in #97\r\n* 修复并发任务问题 by @kaishui123 in #98\r\n* 修复子表选择数据填充子表行默认值问题 by @kaishui123 in #99\r\n* 修复看板筛选的选项太多，切换看板时会卡死问题 by @kaishui123 in #100\r\n* 修复子表校验覆盖公式值问题 by @kaishui123 in #101\r\n* 修复数据管理表排序 by @kaishui123 in #102\r\n* 修复在数据管理表单元格编辑后，被引用的隐藏的子表内容被清空问题 by @kaishui123 in #103\r\n* 修复数据管理表导入数据顺序问题 by @kaishui123 in #104\r\n\r\n\r",
+          "packages": {
+            "x86": {
+              "download_url": "https://github.com/BanbanAI/BanbanAI/releases/download/v2.1.2/banban-client-2.1.2-fnos-x64.fpk",
+              "size": 272795831,
+              "sha256": "fdd93cfec4085de7ba73f284192e4d9f0114af5866d66c7f5a622c9c3c3647d9"
+            },
+            "arm": {
+              "download_url": "https://github.com/BanbanAI/BanbanAI/releases/download/v2.1.2/banban-client-2.1.2-fnos-arm64.fpk",
+              "size": 271745667,
+              "sha256": "30c64331d00d5b3e8fc9cb013f77fa9721562a2c8e38568670966172a21f7363"
+            }
+          }
+        }
+      }
     }
   }
 }
